@@ -28,7 +28,6 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - libmagic  # [unix]
     - make      # [unix]
 
   host:

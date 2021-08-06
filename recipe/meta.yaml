@@ -32,6 +32,8 @@ requirements:
     - {{ compiler('c') }}
     - libmagic  # [unix]
     - make      # [unix]
+    - patch     # [not win]
+    - m2-patch  # [win]
 
   host:
     # cffi 1.4.0 is the general minimum version

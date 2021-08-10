@@ -1,6 +1,6 @@
 {% set name = "gevent" %}
-{% set version = "21.1.2" %}
-{% set sha256 = "520cc2a029a9eef436e4e56b007af7859315cafa21937d43c1d5269f12f2c981" %}
+{% set version = "21.8.0" %}
+{% set sha256 = "43e93e1a4738c922a2416baf33f0afb0a20b22d3dba886720bc037cd02a98575" %}
 
 package:
   name: {{ name|lower }}
@@ -27,28 +27,33 @@ build:
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
-    # - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - cffi                                   # [build_platform != target_platform]
     - {{ compiler('c') }}
     - libmagic  # [unix]
     - make      # [unix]
+    - patch     # [not win]
+    - m2-patch  # [win]
 
   host:
     # cffi 1.4.0 is the general minimum version
     # With Python 3 version 1.11.3 is minimum
     # On windows 1.11.5 is the minimum
     # Rather than special casing each of these use a single minimum version
-    - cffi >=1.11.5
+    - cffi >=1.12.3
     - pip
     - python
+    - cython
+    - setuptools >=40.8.0
+    - greenlet >=0.4.17,<2.0
+    - wheel
     - libev     # [unix]
     - libuv     # [unix]
     - c-ares    # [unix]
 
   run:
-    - cffi >=1.11.5
+    - cffi >=1.12.2
     - python
-    - greenlet >=0.4.17,<2.0
+    - greenlet >=1.1.0,<2.0
     - zope.event
     - zope.interface
     - setuptools

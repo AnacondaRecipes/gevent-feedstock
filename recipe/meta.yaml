@@ -41,8 +41,8 @@ requirements:
     - pip
     - python
     - cython
-    - setuptools >=40.8.0
-    - greenlet >=2.0.0
+    - setuptools
+    - greenlet 2.0.*
     - wheel
     - libev     # [unix]
     - libuv     # [unix]

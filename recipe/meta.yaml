@@ -1,19 +1,16 @@
 {% set name = "gevent" %}
-{% set version = "22.10.2" %}
-{% set sha256 = "1ca01da176ee37b3527a2702f7d40dbc9ffb8cfc7be5a03bfa4f9eec45e55c46" %}
+{% set version = "23.9.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 72c002235390d46f94938a96920d8856d4ffd9ddf62a303a0d7c118894097e34
   patches:   # [unix]
     - 0001-Allow-include-flags-to-be-present-in-CFLAGS.patch        # [unix]
     - 0002-Allow-library-flags-to-be-present-in-LDFLAGS.patch       # [unix]
-    - 0003-Do-not-use-hard-coded-path-for-file-command.patch        # [unix]
     - 0004-Allow-macro-to-be-present-in-CFLAGS.patch                # [unix]
     - 0005-Drop-isysroot-if-CONDA_BUILD_SYSROOT-is-specified.patch  # [unix]
 
@@ -22,7 +19,7 @@ build:
   script:
     - export GEVENTSETUP_EMBED_LIBEV=0 GEVENTSETUP_EMBED_LIBUV=0 GEVENTSETUP_EMBED_CARES=0  # [unix]
     - copy %SRC_DIR%\deps\c-ares\ares_build.h.dist %SRC_DIR%\deps\c-ares\ares_build.h       # [win]
-    - {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed -v
 
 requirements:
   build:
@@ -30,19 +27,14 @@ requirements:
     - libmagic  # [unix]
     - make      # [unix]
     - patch     # [unix]
-    - m2-patch  # [win]
 
   host:
-    # cffi 1.4.0 is the general minimum version
-    # With Python 3 version 1.11.3 is minimum
-    # On windows 1.11.5 is the minimum
-    # Rather than special casing each of these use a single minimum version
     - cffi >=1.12.3
     - pip
     - python
-    - cython
+    - cython >=3.0
     - setuptools
-    - greenlet 2.0.*
+    - greenlet 3.0.*
     - wheel
     - libev     # [unix]
     - libuv     # [unix]
@@ -51,7 +43,8 @@ requirements:
   run:
     - cffi >=1.12.2
     - python
-    - greenlet >=2.0.0
+    - greenlet >=2.0.0  # [py<311]
+    - greenlet >=3.0.0  # [py>=311]
     - zope.event
     - zope.interface
     - setuptools
@@ -67,7 +60,7 @@ test:
     - gevent.libuv
     - gevent.resolver
   commands:
-    - python -m pip check
+    - pip check
 
 about:
   home: https://www.gevent.org

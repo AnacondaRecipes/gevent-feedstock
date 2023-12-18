@@ -1,1 +1,5 @@
 aggregate_branch: 3.12
+
+channels:
+  # lightning
+  - https://staging.continuum.io/prefect/fs/zope.event-feedstock/pr2/a71acb0

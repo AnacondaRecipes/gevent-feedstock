@@ -31,11 +31,10 @@ requirements:
     - setuptools >=40.8.0
     - greenlet >=3.2.2
     - wheel
-    # # gevent's Unix event-loop backend
-    # https://www.gevent.org/loop_impls.html
-    - libev {{ libev }} # [unix]
-    - libuv {{ libuv }} # [unix]
-    - c-ares {{ c-ares }}  # [unix]
+    # gevent's Unix event-loop backend - https://www.gevent.org/loop_impls.html
+    - libev {{ libev }}  # [unix]
+    - libuv {{ libuv }}  # [unix]
+    - c-ares {{ c_ares }}  # [unix]
   run:
     - python
     - cffi >=2.1.1  # [win]

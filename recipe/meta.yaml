@@ -30,9 +30,9 @@ requirements:
     - cython >=3.2.4
     - setuptools >=40.8.0
     - greenlet >=3.2.2
-    - libev  # [unix]
-    - libuv  # [unix]
-    - c-ares  # [unix]
+    - libev {{ libev}} # [unix]
+    - libuv {{ libuv}} # [unix]
+    - c-ares >=1.34.7  # [unix]
   run:
     - python
     - cffi >=2.1.1  # [win]
